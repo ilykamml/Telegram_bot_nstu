@@ -1,16 +1,42 @@
-# This is a sample Python script.
+'''
+Телеграмм бот для студентов НГТУ НЭТИ
+Главные возможности:
+TODO: 1. добавление в общий чат группы
+TODO: 2. расписание занятий
+TODO: 3. расписание экзаменов
+TODO: 4. расписание преподавателей
+TODO: 5. расписание аудиторий
+TODO: 6. новости НГТУ НЭТИ
+TODO: 7. работа с домашними заданиями
+TODO: 7.1. добавление домашнего задания
+TODO: 7.2. уведомление о домашнем задании за установленное время до пары
+'''
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import telebot
+from defs import *
+import requests
+import json
+import datetime
+import time
+import sqlite3
+import os
+import re
+from bs4 import BeautifulSoup
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    # Токен бота
+    with open('token.txt', 'r') as f:
+        token = f.read()
+    bot = telebot.TeleBot(token)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    @bot.message_handler(commands=['start'])
+    def start_command(message):
+        bot.send_message(message.chat.id, 'Привет, я бот для студентов НГТУ НЭТИ')
+        info = f'| {message.from_user.first_name} {message.from_user.last_name}   @{message.from_user.username}\n' \
+               f'| ID: {message.from_user.id}\n| First message: {datetime.datetime.fromtimestamp(message.date).strftime("%d.%m.%Y %H:%M:%S")}'
+        new_one(message.chat.id, info)
+
+
+    # запуск бота
+    bot.polling()
