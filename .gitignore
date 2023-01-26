@@ -2,3 +2,6 @@
 /.idea/
 token.txt
 users.txt
+users.json
+main_old.py
+async learn.py
