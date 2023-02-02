@@ -17,6 +17,7 @@ import os
 import logging
 
 from aiogram import Bot, Dispatcher
+
 from aiogram.types import BotCommand
 
 from commands import *
@@ -43,7 +44,7 @@ async def main() -> None:
 
     # инициализация бота
     bot = Bot(token=os.getenv('token'))
-    dp = Dispatcher(bot)
+    dp = Dispatcher()
 
     register_user_commands(dp)
 
@@ -53,7 +54,7 @@ async def main() -> None:
     logger.info(f'Bot started')
 
     # пуллинг
-    await dp.start_polling()
+    await dp.start_polling(bot)
 
 
 if __name__ == '__main__':

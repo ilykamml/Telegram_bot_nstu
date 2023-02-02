@@ -1,5 +1,7 @@
 # импорты
 from aiogram import types
+from aiogram.filters import CommandObject
+
 import logging
 
 from commands.list_of_commands import command_list
@@ -20,11 +22,10 @@ async def cancel(message: types.Message) -> None:
 
 
 # обработка команды помощи
-async def help_command(message: types.Message) -> types.Message.answer:
-    arg = message.get_args()
-    if arg:
+async def help_command(message: types.Message, command: CommandObject) -> types.Message.answer:
+    if command.args:
         for cmd in command_list:
-            if cmd[0] == arg:
+            if cmd[0] == command.args:
                 return await message.answer(f'/{cmd[0]}: {cmd[1]}\n\n'
                                             f'{cmd[2]}')
         return await message.answer(f'Такой команды нет')
