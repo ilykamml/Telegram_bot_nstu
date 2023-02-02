@@ -23,7 +23,6 @@ from commands import *
 
 # логгирование
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
 
 # хэндлеры и форматирование
 log_file_handler = logging.FileHandler(f'bot.log', 'w')
@@ -33,10 +32,8 @@ log_formatter = logging.Formatter(f'%(levelname)s: %(asctime)s - %(name)s - %(me
 # назначение хэндлеров
 log_file_handler.setFormatter(log_formatter)
 log_console_handler.setFormatter(log_formatter)
-logger.addHandler(log_file_handler)
-logger.addHandler(log_console_handler)
-
-# logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(handlers=[log_file_handler, log_console_handler],
+                    level=logging.INFO)
 
 
 # супер-мега главная функция
